@@ -44,7 +44,7 @@ pipeline {
     stage('Update Manifest Repo') {
       steps {
         sh '''
-          git clone https://github.com/chandrayarramreddy/petclinic-deploy.git
+          git clone https://github.com/chandrayarramreddy/petclinic-deploy.git -b master
           cd petclinic-deploy
           #sed -i "s|image:.*|image: $IMAGE:$VERSION|" deployment.yaml
           sed -i "s|:4\.0\.0-SNAPSHOT|:$VERSION|g" petclinic-deploy/deployment.yaml
