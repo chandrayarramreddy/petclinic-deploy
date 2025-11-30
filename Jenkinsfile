@@ -35,7 +35,7 @@ pipeline {
         withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
           sh "echo $PASS | docker login -u $USER --password-stdin"
           //sh "docker push $IMAGE:$VERSION"
-           sh "docker tag $IMAGE $IMAGE"
+           sh "docker tag spring-petclinic:4.0.0-SNAPSHOT $IMAGE"
            sh "docker push $IMAGE"
         }
       }
@@ -46,7 +46,8 @@ pipeline {
         sh '''
           git clone https://github.com/chandrayarramreddy/petclinic-deploy.git
           cd petclinic-deploy
-          sed -i "s|image:.*|image: $IMAGE:$VERSION|" deployment.yaml
+          #sed -i "s|image:.*|image: $IMAGE:$VERSION|" deployment.yaml
+          sed -i "s|:4\.0\.0-SNAPSHOT|:$VERSION|g" petclinic-deploy/deployment.yaml
           git config user.name "chandra"
           git config user.email "chandra.yarramreddy@gmail.com"
           git commit -am "Deploy build $VERSION"
