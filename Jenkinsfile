@@ -44,10 +44,12 @@ pipeline {
     stage('Update Manifest Repo') {
       steps {
         sh '''
+          rm -rf petclinic-deploy
           git clone https://github.com/chandrayarramreddy/petclinic-deploy.git -b master
           cd petclinic-deploy
           #sed -i "s|image:.*|image: $IMAGE:$VERSION|" deployment.yaml
-          sed -i "s|:4\.0\.0-SNAPSHOT|:$VERSION|g" petclinic-deploy/deployment.yaml
+          #sed -i "s|:4\\\\\\.0\\\\\\.0-SNAPSHOT|:${VERSION}|g" petclinic-deploy/deployment.yaml
+          sed -i "s|image:.*:|image: docker.io/chandray/spring-petclinic:${VERSION}|g" petclinic-deploy/deployment.yaml
           git config user.name "chandra"
           git config user.email "chandra.yarramreddy@gmail.com"
           git commit -am "Deploy build $VERSION"
