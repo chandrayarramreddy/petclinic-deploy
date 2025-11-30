@@ -53,7 +53,7 @@ pipeline {
           git config user.name "chandra"
           git config user.email "chandra.yarramreddy@gmail.com"
           git commit -am "Deploy build $VERSION"
-          git push origin main
+          git push origin master
         '''
       }
     }
