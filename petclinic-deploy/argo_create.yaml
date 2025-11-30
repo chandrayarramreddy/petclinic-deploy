@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: petclinic
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/chandrayarramreddy/petclinic-deploy.git
+    targetRevision: main
+    path: .
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
